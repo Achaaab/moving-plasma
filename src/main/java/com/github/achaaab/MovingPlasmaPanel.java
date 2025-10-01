@@ -6,46 +6,46 @@ import java.awt.GridLayout;
 
 public class MovingPlasmaPanel extends JPanel {
 
-	private final JSlider a;
-	private final JSlider b;
-	private final JSlider c;
-	private final JSlider d;
-	private final JSlider e;
+	private final JSlider factorX;
+	private final JSlider factorY;
+	private final JSlider colorFactor;
+	private final JSlider colorOffset;
+	private final JSlider timeFactor;
 
 	public MovingPlasmaPanel() {
 
 		setLayout(new GridLayout(5, 1));
 
-		a = new JSlider(1, 100);
-		b = new JSlider(1, 100);
-		c = new JSlider(1, 1000);
-		d = new JSlider(-1000, 1000);
-		e = new JSlider(1, 1000);
+		factorX = new JSlider(1, 100);
+		factorY = new JSlider(1, 100);
+		colorFactor = new JSlider(1, 1000);
+		colorOffset = new JSlider(-1000, 1000);
+		timeFactor = new JSlider(1, 1000);
 
-		add(a);
-		add(b);
-		add(c);
-		add(d);
-		add(e);
+		add(factorX);
+		add(factorY);
+		add(colorFactor);
+		add(colorOffset);
+		add(timeFactor);
 	}
 
-	public JSlider a() {
-		return a;
+	public JSlider factorX() {
+		return factorX;
 	}
 
-	public JSlider b() {
-		return b;
+	public JSlider factorY() {
+		return factorY;
 	}
 
-	public JSlider c() {
-		return c;
+	public JSlider colorFactor() {
+		return colorFactor;
 	}
 
-	public JSlider d() {
-		return d;
+	public JSlider colorOffset() {
+		return colorOffset;
 	}
 
-	public JSlider e() {
-		return e;
+	public JSlider timeFactor() {
+		return timeFactor;
 	}
 }

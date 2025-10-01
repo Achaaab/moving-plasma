@@ -1,6 +1,5 @@
 package com.github.achaaab;
 
-import static java.awt.Toolkit.getDefaultToolkit;
 import static java.lang.Math.round;
 import static java.lang.System.nanoTime;
 import static java.lang.Thread.currentThread;
@@ -22,20 +21,20 @@ public class MovingPlasmaController implements Runnable {
 
 		targetFrameDuration = round(1_000_000_000 / 60.0);
 
-		panel.a().setValue(model.getA());
-		panel.b().setValue(model.getB());
-		panel.c().setValue(model.getC());
-		panel.d().setValue(model.getD());
-		panel.e().setValue(model.getE());
+		panel.factorX().setValue(model.getxFactor());
+		panel.factorY().setValue(model.getFactorY());
+		panel.colorFactor().setValue(model.getColorFactor());
+		panel.colorOffset().setValue(model.getColorOffset());
+		panel.timeFactor().setValue(model.getTimeFactor());
 	}
 
 	public void update(double deltaTime) {
 
-		model.setA(panel.a().getValue());
-		model.setB(panel.b().getValue());
-		model.setC(panel.c().getValue());
-		model.setD(panel.d().getValue());
-		model.setE(panel.e().getValue());
+		model.setxFactor(panel.factorX().getValue());
+		model.setFactorY(panel.factorY().getValue());
+		model.setColorFactor(panel.colorFactor().getValue());
+		model.setColorOffset(panel.colorOffset().getValue());
+		model.setTimeFactor(panel.timeFactor().getValue());
 
 		var image = view.getImage();
 
@@ -55,18 +54,23 @@ public class MovingPlasmaController implements Runnable {
 			frameStartTime = frameEndTime;
 
 			update(deltaTime / 1_000_000_000.0);
-			getDefaultToolkit().sync();
 
 			frameEndTime = ensureFrameDuration(frameStartTime, nanoTime());
 		}
 	}
 
 	/**
-	 * Ensures frame duration.
+	 * Ensures that the frame meets the target duration by adding a delay if needed.
+	 * <p>
+	 * This method compares the actual frame duration with the target frame duration.
+	 * If the frame is shorter, the current thread is put to sleep to match the target
+	 * timing, and the adjusted end time is returned.
+	 * </p>
 	 *
-	 * @param frameStartTime frame start time
-	 * @param frameEndTime actual frame end time
-	 * @return frame end time after temporisation
+	 * @param frameStartTime timestamp (in nanoseconds) when the frame started
+	 * @param frameEndTime timestamp (in nanoseconds) when the frame ended
+	 * @return adjusted frame end time (in nanoseconds) after applying the delay,
+	 * or the original {@code frameEndTime} if no delay was required
 	 * @since 0.0.0
 	 */
 	private long ensureFrameDuration(long frameStartTime, long frameEndTime) {
@@ -80,12 +84,8 @@ public class MovingPlasmaController implements Runnable {
 			if (freeTime > 0) {
 
 				try {
-
 					sleep(freeTime);
-
 				} catch (InterruptedException interruption) {
-
-					interruption.printStackTrace();
 					currentThread().interrupt();
 				}
 

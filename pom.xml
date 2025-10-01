@@ -30,6 +30,9 @@
 	</properties>
 
 	<build>
+
+		<finalName>${project.artifactId}</finalName>
+
 		<plugins>
 
 			<plugin>
@@ -81,7 +84,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.github.achaaab.scrabble.SolverApplication</mainClass>
+							<mainClass>com.github.achaaab.MovingPlasmaApplication</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
