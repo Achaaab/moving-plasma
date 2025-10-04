@@ -4,6 +4,12 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import java.awt.GridLayout;
 
+/**
+ * Moving plasma control panel.
+ *
+ * @author Jonathan Guéhenneux
+ * @since 0.0.0
+ */
 public class MovingPlasmaPanel extends JPanel {
 
 	private final JSlider factorX;

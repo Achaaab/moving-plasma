@@ -5,6 +5,12 @@ import static java.lang.System.nanoTime;
 import static java.lang.Thread.currentThread;
 import static java.lang.Thread.sleep;
 
+/**
+ * Moving plasma controller.
+ *
+ * @author Jonathan Guéhenneux
+ * @since 0.0.0
+ */
 public class MovingPlasmaController implements Runnable {
 
 	private final MovingPlasmaModel model;

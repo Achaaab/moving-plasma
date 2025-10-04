@@ -11,6 +11,12 @@ import static java.lang.Math.sin;
 import static java.lang.Math.toIntExact;
 import static java.util.stream.IntStream.range;
 
+/**
+ * Moving plasma model.
+ *
+ * @author Jonathan Guéhenneux
+ * @since 0.0.0
+ */
 public class MovingPlasmaModel {
 
 	private double time;
@@ -32,6 +38,11 @@ public class MovingPlasmaModel {
 	private double[] greenY;
 	private double[] blueY;
 
+	/**
+	 * Creates a moving plasma.
+	 *
+	 * @since 0.0.0
+	 */
 	public MovingPlasmaModel() {
 
 		time = 0.0;
@@ -43,6 +54,13 @@ public class MovingPlasmaModel {
 		timeFactor = 100;
 	}
 
+	/**
+	 * Update image data.
+	 *
+	 * @param deltaTime elapsed time since the last update, in seconds
+	 * @param image image to update
+	 * @since 0.0.0
+	 */
 	public void update(double deltaTime, BufferedImage image) {
 
 		time += (deltaTime * timeFactor / 100.0);
@@ -53,7 +71,16 @@ public class MovingPlasmaModel {
 		var dataBuffer = (DataBufferInt) image.getRaster().getDataBuffer();
 		data = dataBuffer.getData();
 
-		// memoization
+		memoize();
+		range(0, height).parallel().forEach(this::computeRow);
+	}
+
+	/**
+	 * Memoizes sines and cosines.
+	 *
+	 * @since 0.0.0
+	 */
+	private void memoize() {
 
 		redX = new double[width];
 		greenX = new double[width];
@@ -75,21 +102,31 @@ public class MovingPlasmaModel {
 			greenY[y] = cos((double) y / factorX + time);
 			blueY[y] = sin((double) y / factorY - time);
 		}
-
-		range(0, width).parallel().forEach(this::computeColumn);
 	}
 
-	private void computeColumn(int x) {
+	/**
+	 * Compute a whole row.
+	 *
+	 * @param y row index
+	 * @since 0.0.0
+	 */
+	private void computeRow(int y) {
 
-		var i = x;
+		var i = y * width;
 
-		for (var y = 0; y < height; y++) {
-
-			data[i] = getRgb(x, y);
-			i += width;
+		for (var x = 0; x < width; x++) {
+			data[i++] = getRgb(x, y);
 		}
 	}
 
+	/**
+	 * Get RGB value for a given pixel.
+	 *
+	 * @param x x coordinate of the pixel
+	 * @param y y coordinate of the pixel
+	 * @return RGB value for the given pixel
+	 * @since 0.0.0
+	 */
 	private int getRgb(int x, int y) {
 
 		var red = fma(redX[x] + redY[y], colorFactor, colorOffset);

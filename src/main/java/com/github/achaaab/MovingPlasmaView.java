@@ -14,6 +14,12 @@ import static java.util.logging.Level.WARNING;
 import static java.util.logging.Logger.getLogger;
 import static javax.swing.SwingUtilities.invokeAndWait;
 
+/**
+ * Moving plasma control view.
+ *
+ * @author Jonathan Guéhenneux
+ * @since 0.0.0
+ */
 public class MovingPlasmaView extends JComponent {
 
 	private static final Logger LOGGER = getLogger(MovingPlasmaView.class.getName());

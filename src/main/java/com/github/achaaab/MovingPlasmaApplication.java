@@ -11,10 +11,19 @@ import static javax.swing.UIManager.getSystemLookAndFeelClassName;
 import static javax.swing.UIManager.setLookAndFeel;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
+/**
+ * Simple desktop application showing a plasma animation.
+ *
+ * @author Jonathan Guéhenneux
+ * @since 0.0.0
+ */
 class MovingPlasmaApplication {
 
 	private static final Logger LOGGER = getLogger(MovingPlasmaApplication.class.getName());
 
+	/**
+	 * Application entry point.
+	 */
 	void main() {
 
 		try {
